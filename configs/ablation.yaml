@@ -1,0 +1,83 @@
+# Ablation study: Baseline without credal sets
+
+# Model configuration
+model:
+  backbone: densenet121
+  pretrained: true
+  num_classes: 14
+  use_credal_sets: false  # ABLATION: Disable credal sets
+  credal_set_size: 1
+  dropout_rate: 0.3
+  use_hierarchical_structure: false  # ABLATION: Disable hierarchical structure
+
+# Credal set parameters
+credal:
+  enabled: false  # ABLATION: Disable credal sets
+  concentration_prior: 1.0
+  uncertainty_budget: 0.0
+  adaptive_temperature: false
+  per_class_temperature: false
+
+# Data configuration
+data:
+  dataset: chexpert
+  image_size: 320
+  batch_size: 16
+  num_workers: 4
+  train_split: 0.8
+  val_split: 0.1
+  test_split: 0.1
+  u_zeros: true
+  augmentation_strength: 0.5
+
+# Training configuration
+training:
+  epochs: 50
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  optimizer: adam
+  scheduler: cosine
+  warmup_epochs: 5
+  early_stopping_patience: 10
+  gradient_clip_norm: 1.0
+  mixed_precision: true
+  save_best_only: true
+
+# Loss configuration
+loss:
+  type: binary_cross_entropy  # ABLATION: Standard BCE loss
+  base_loss: binary_cross_entropy
+  evidential_weight: 0.0  # ABLATION: No evidential component
+  consistency_weight: 0.0
+  label_smoothing: 0.0  # ABLATION: No label smoothing
+  hierarchical_weight: 0.0
+
+# Evaluation configuration
+evaluation:
+  metrics:
+    - auroc
+    - auprc
+    - expected_calibration_error
+    - coverage_at_confidence
+    - prediction_set_efficiency
+  confidence_levels:
+    - 0.8
+    - 0.9
+    - 0.95
+  calibration_bins: 15
+
+# Paths
+paths:
+  data_root: ./data/chexpert
+  checkpoint_dir: ./models
+  results_dir: ./results
+  log_dir: ./logs
+
+# Reproducibility
+seed: 42
+
+# MLflow
+mlflow:
+  experiment_name: credal_medical_diagnosis_ablation
+  tracking_uri: ./mlruns
+  log_models: true
