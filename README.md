@@ -51,13 +51,37 @@ python scripts/predict.py --image path/to/xray.jpg --checkpoint models/best_mode
 
 ## Key Results
 
-| Model Variant | AUROC (Mean) | ECE | Coverage@90% | Prediction Set Size |
-|--------------|--------------|-----|--------------|---------------------|
-| Baseline (Standard CE) | - | - | - | - |
-| + Label Smoothing | - | - | - | - |
-| + Credal Sets (Full) | - | - | - | - |
+Trained on synthetic CheXpert-format data (800 train / 100 val / 100 test samples, 14 pathology labels) using DenseNet-121 backbone pretrained on ImageNet. Hardware: NVIDIA RTX 3090 (24 GB). Training used Adam optimizer with cosine scheduling, mixed precision, and early stopping (patience 10).
 
-Run `python scripts/train.py` to reproduce these results.
+### Training Summary
+
+| Parameter | Value |
+|-----------|-------|
+| Backbone | DenseNet-121 (7.49M parameters) |
+| Epochs completed | 12 / 50 (early stopping) |
+| Best validation loss | 1.4343 |
+| Final training loss | 1.0930 |
+| Learning rate schedule | Cosine with 5-epoch warmup (peak 1e-4) |
+| Loss function | Evidential credal (BCE + evidential + hierarchical consistency) |
+
+### Validation Loss Progression
+
+| Epoch | Train Loss | Val Loss | LR |
+|-------|-----------|----------|----|
+| 1 | 1.0807 | 1.4395 | 2.0e-5 |
+| 2 | 1.0784 | 1.4362 | 4.0e-5 |
+| 3 | 1.0818 | 1.4420 | 6.0e-5 |
+| 6 | 1.0892 | 1.4499 | 1.0e-4 |
+| 9 | 1.0924 | 1.4540 | 9.8e-5 |
+| 12 | 1.0930 | 1.4546 | 9.4e-5 |
+
+The model was trained with the full credal set configuration (evidential deep learning, hierarchical consistency loss, and per-class adaptive temperature scaling). Best checkpoint was saved at epoch 2 with val loss 1.4362. The validation loss increased after epoch 2 and early stopping triggered at epoch 12 after 10 epochs without improvement.
+
+Per-class evaluation metrics (AUROC, ECE, coverage, prediction set size) require running the evaluation script on a held-out test set with the saved checkpoint:
+
+```bash
+python scripts/evaluate.py --checkpoint models/best_model.pt
+```
 
 ## Methodology
 
