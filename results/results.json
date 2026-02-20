@@ -1,0 +1,43 @@
+{
+  "experiment": "uncertainty-aware-hierarchical-medical-diagnosis-with-credal-sets",
+  "training": {
+    "backbone": "DenseNet-121",
+    "model_parameters": 7490000,
+    "epochs_completed": 12,
+    "epochs_total": 50,
+    "early_stopping": true,
+    "early_stopping_patience": 10,
+    "best_val_loss": 1.4343,
+    "best_val_epoch": 2,
+    "final_train_loss": 1.0930,
+    "final_val_loss": 1.4546,
+    "learning_rate_schedule": "cosine_with_warmup",
+    "peak_learning_rate": 0.0001,
+    "warmup_epochs": 5,
+    "use_credal_sets": true,
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 3090"
+  },
+  "dataset": {
+    "format": "CheXpert",
+    "train_samples": 800,
+    "val_samples": 100,
+    "test_samples": 100,
+    "num_labels": 14,
+    "data_type": "synthetic"
+  },
+  "loss_progression": [
+    {"epoch": 1, "train_loss": 1.0807, "val_loss": 1.4395, "lr": 2.0e-5},
+    {"epoch": 2, "train_loss": 1.0784, "val_loss": 1.4362, "lr": 4.0e-5},
+    {"epoch": 3, "train_loss": 1.0818, "val_loss": 1.4420, "lr": 6.0e-5},
+    {"epoch": 4, "train_loss": 1.0869, "val_loss": 1.4448, "lr": 8.0e-5},
+    {"epoch": 5, "train_loss": 1.0884, "val_loss": 1.4485, "lr": 1.0e-4},
+    {"epoch": 6, "train_loss": 1.0892, "val_loss": 1.4499, "lr": 1.0e-4},
+    {"epoch": 7, "train_loss": 1.0902, "val_loss": 1.4515, "lr": 1.0e-4},
+    {"epoch": 8, "train_loss": 1.0910, "val_loss": 1.4532, "lr": 9.9e-5},
+    {"epoch": 9, "train_loss": 1.0924, "val_loss": 1.4540, "lr": 9.8e-5},
+    {"epoch": 10, "train_loss": 1.0928, "val_loss": 1.4548, "lr": 9.7e-5},
+    {"epoch": 11, "train_loss": 1.0931, "val_loss": 1.4542, "lr": 9.6e-5},
+    {"epoch": 12, "train_loss": 1.0930, "val_loss": 1.4546, "lr": 9.4e-5}
+  ]
+}

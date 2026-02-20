@@ -57,9 +57,8 @@ checkpoints/*.pth
 # Logs and results
 logs/
 mlruns/
-results/*.json
-results/*.csv
-results/*.png
+results/*
+!results/results.json
 *.log
 
 # Testing
