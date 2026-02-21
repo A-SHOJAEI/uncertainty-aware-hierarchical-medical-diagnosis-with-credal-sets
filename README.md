@@ -75,7 +75,7 @@ Trained on synthetic CheXpert-format data (800 train / 100 val / 100 test sample
 | 9 | 1.0924 | 1.4540 | 9.8e-5 |
 | 12 | 1.0930 | 1.4546 | 9.4e-5 |
 
-The model was trained with the full credal set configuration (evidential deep learning, hierarchical consistency loss, and per-class adaptive temperature scaling). Best checkpoint was saved at epoch 2 with val loss 1.4362. The validation loss increased after epoch 2 and early stopping triggered at epoch 12 after 10 epochs without improvement.
+The model was trained with the full credal set configuration (evidential deep learning, hierarchical consistency loss, and per-class adaptive temperature scaling). Best checkpoint was saved at epoch 2 with val loss 1.4343. The validation loss increased after epoch 2 and early stopping triggered at epoch 12 after 10 epochs without improvement.
 
 Per-class evaluation metrics (AUROC, ECE, coverage, prediction set size) require running the evaluation script on a held-out test set with the saved checkpoint:
 
